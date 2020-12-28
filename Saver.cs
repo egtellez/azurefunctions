@@ -16,7 +16,7 @@ namespace AzureDemo
         [FunctionName("Saver")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-            [Queue("customers", Connection= "AzureWebJobsStorage")] IAsyncCollector<CustomerEntity> customerQueue,
+            [Queue("customers", Connection= "ximenaazuredemostorage1_STORAGE")] IAsyncCollector<CustomerEntity> customerQueue,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function Saver processed a request.");

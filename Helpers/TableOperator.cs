@@ -3,6 +3,8 @@ using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage;
 using System.Threading.Tasks;
 using AzureDemo.Model;
+using DemoExceptions;
+
 public class TableOperator
 {
      private readonly CloudStorageAccount cloudStorageAccount;

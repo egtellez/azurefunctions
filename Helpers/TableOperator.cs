@@ -4,14 +4,25 @@ using Microsoft.WindowsAzure.Storage;
 using System.Threading.Tasks;
 using AzureDemo.Model;
 using DemoExceptions;
+using System;
+using Microsoft.Extensions.Configuration;
 
-public class TableOperator
+public class TableOperator : ITableOperator
 {
-     private readonly CloudStorageAccount cloudStorageAccount;
+    private readonly CloudStorageAccount cloudStorageAccount;
     private readonly CloudTable table;
     public TableOperator(string tableName)
     {
-        var credentials = new StorageCredentials("ximenaazuredemostorage1", "28sADo9xylhj5QbOLEWdPsom+XYSzf/8moDBFkSxunvnkkulROZMWkjb5lMsnwyTirq1+j0+9Cfi5mgw4w5zxA==");
+        var config = new ConfigurationBuilder()
+        .SetBasePath(Environment.CurrentDirectory)
+        .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+        .AddEnvironmentVariables()
+        .Build();
+        
+        var accountName = config["ximenaazuredemostorage1_accountname"];
+        var accountKey = config["ximenaazuredemostorage1_accountkey"];
+
+        var credentials = new StorageCredentials(accountName, accountKey);
         cloudStorageAccount = new CloudStorageAccount(credentials, useHttps: true);
         var tableClient = cloudStorageAccount.CreateCloudTableClient();
         table = tableClient.GetTableReference(tableName);
